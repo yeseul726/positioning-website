@@ -1,3 +1,5 @@
+<%@page import="java.io.FileWriter"%>
+<%@page import="java.io.BufferedWriter"%>
 <%@page import="java.io.FileReader"%>
 <%@page import="java.io.BufferedReader"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -49,6 +51,7 @@ table .tb_section {
 	src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script>
 	var cnt = 0;
+	
 	$(function() {
 		$("#sectionAdd")
 				.click(
@@ -61,9 +64,9 @@ table .tb_section {
 										+ cnt + "분단<br><br>";
 								for (var i = 0; i < row; i++) {
 									for (var j = 0; j < col; j++) {
-										html += "<div class='cell'></div>&nbsp;"
+										html += "<div class='cell'></span></div>&nbsp;";
 									}
-									html += "<br>"
+									html += "<br>";
 								}
 								html += '<button type="button" id="btnDel" class="btnType">X</button></div>&nbsp;&nbsp;&nbsp;&nbsp;';
 							} else {
@@ -82,6 +85,9 @@ table .tb_section {
 		$("#studentAdd")
 				.click(
 						function() {
+							var col = document.getElementById("col").value;
+							var row = document.getElementById("row").value;
+							var section = document.getElementById("section").value;
 							studentNum = document.getElementById("studentNum").value;
 							if (studentNum != "") {
 								var html = "<br><br><form action='positioning.jsp' method='post'>" +
@@ -91,7 +97,10 @@ table .tb_section {
 									if((i + 1) % 5 == 0) html += "<br><br>";
 								}
 								html += "<button type='button' id='studentDel' class='btnType'>X</button></div>" +
-								"<button type='submit'>배치하기</button></form>";
+								"<input type='hidden' name='col' value="+ col +"><input type='hidden' name='row' value="+ row +">"
+								+ "<input type='hidden' name='section' value="+ section +">" +
+								"<input type='hidden' name='studentNum' value="+ studentNum +">" +
+								"<button type='submit' class='btnType' id='positioning'>배치하기</button></form>";
 							} else {
 								alert("학생 수를 입력해주세요.");
 							}
@@ -105,28 +114,34 @@ table .tb_section {
 			$(this).parent().remove();
 		});
 		
+		return false;
 	})
-	
-	
 </script>
 </head>
 <body>
+
+
+
 <br><br>
 	<div align="center" class="section">
 		<table class="tb_section">
 			<tr>
 				<td style="font-size: 15pt; width: 100px;">칸 : </td>
 				<td><input type="number" id="col" min="1"><!-- 칸 --></td>
-				<td rowspan="2"><button type="button" id="sectionAdd" class="btnType">추가</button></td>
+				<!-- <td rowspan="2"><button type="button" id="sectionAdd" class="btnType">추가</button></td> -->
 			</tr>
 			<tr>
 				<td style="font-size: 15pt;">줄 : </td>
 				<td colspan="3"><input type="number" id="row" min="1"><!-- 줄 --></td>
 			</tr>
 			<tr>
+				<td style="font-size: 15pt;">분단 수 : </td>
+				<td colspan="3"><input type="number" id="section" min="1"><!-- 분단 수 --></td>
+			</tr>
+			<tr>
 				<td style="font-size: 15pt;">학생 수 : </td>
 				<td><input type="number" id="studentNum" min="1"><!-- 학생 수 --></td>
-				<td rowspan="2"><button type="button" class="btnType" id="studentAdd">생성</button></td>
+				<td rowspan="3"><button type="button" class="btnType" id="studentAdd">생성</button></td>
 			</tr>
 		</table>
 		<br>
