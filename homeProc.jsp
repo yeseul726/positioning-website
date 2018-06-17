@@ -16,7 +16,6 @@ body {
 h2 {
 	font-family: 'Nanum Gothic';
 }
-
 .cell {
 	display: inline-block;
 	width: 100px;
@@ -29,7 +28,7 @@ h2 {
 	display: inline-block;
 	background-color: #ffffff;
 	color: #303030;
-	height: 100%;
+	height: 95%;
 	outline: none;
 	padding: 10px 15px 10px 15px;
 	border: 1px solid #aeaeae;
@@ -88,26 +87,31 @@ table .tb_section {
 							var col = document.getElementById("col").value;
 							var row = document.getElementById("row").value;
 							var section = document.getElementById("section").value;
-							studentNum = document.getElementById("studentNum").value;
-							if (studentNum != "") {
-								var html = "<br><br><form action='positioning.jsp' method='post'>" +
-								"<div align='center' style='display: inline-block'>";
-								for (var i = 0; i < studentNum; i++) {
-									html += "<input type='text' name='name[]'>&nbsp;&nbsp;"
-									if((i + 1) % 5 == 0) html += "<br><br>";
+							var student = document.getElementById("studentNum").value;
+							if((col * row * section) >= student) {
+								studentNum = document.getElementById("studentNum").value;
+								if (studentNum != "") {
+									var html = "<br><br><form action='positioning.jsp' method='post'>" +
+									"<div align='center' style='display: inline-block'>";
+									for (var i = 0; i < studentNum; i++) {
+										html += "<input type='text' name='name[]'>&nbsp;&nbsp;"
+										if((i + 1) % 5 == 0) html += "<br><br>";
+									}
+									html += "<button type='button' id='studentDel' class='btnType'>X</button></div>" +
+									"<input type='hidden' name='col' value="+ col +"><input type='hidden' name='row' value="+ row +">"
+									+ "<input type='hidden' name='section' value="+ section +">" +
+									"<input type='hidden' name='studentNum' value="+ studentNum +">" +
+									"<button type='submit' class='btnType' id='positioning'>배치하기</button></form>";
+								} else {
+									alert("학생 수를 입력해주세요.");
 								}
-								html += "<button type='button' id='studentDel' class='btnType'>X</button></div>" +
-								"<input type='hidden' name='col' value="+ col +"><input type='hidden' name='row' value="+ row +">"
-								+ "<input type='hidden' name='section' value="+ section +">" +
-								"<input type='hidden' name='studentNum' value="+ studentNum +">" +
-								"<button type='submit' class='btnType' id='positioning'>배치하기</button></form>";
+								$(".section").append(html);
+								$(".solo").focusin(function(){
+									$(".studentNum").prop("disabled", true);
+								});
 							} else {
-								alert("학생 수를 입력해주세요.");
+								alert("배치된 자리보다 학생 수가 더 많습니다.");
 							}
-							$(".section").append(html);
-							$(".solo").focusin(function(){
-								$(".studentNum").prop("disabled", true);
-							});
 						});
 
 		$(".section").on("click", "#studentDel", function() {

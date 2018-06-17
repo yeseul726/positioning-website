@@ -30,6 +30,12 @@
 	border-radius: 7px;
 	cursor: pointer;
 }
+span {
+	display: table-cell;
+	vertical-align:middle;
+	width: 100%;
+	height: 100%;
+}
 .teacher {
 	display: inline-block;
 	width: 150px;
@@ -54,7 +60,7 @@ $(function() {
 									+ cnt + "분단<br><br>";
 							for (var i = 0; i < row; i++) {
 								for (var j = 0; j < col; j++) {
-									html += "<div class='cell'></span></div>&nbsp;";
+									html += "<div class='cell'></div>&nbsp;";
 								}
 								html += "<br>";
 							}
@@ -199,7 +205,7 @@ $(function() {
 			int sn = studentNum;
 			%>
 			<div align='center'><br><br>
-			<div class="teacher">교 탁</div><br><br>
+			<div class="teacher"><br><br>교 탁</div><br><br>
 			<%
 			if(row != null && col != null && section != null) {
 				for(int i = 0; i < s; i++) {
@@ -211,7 +217,8 @@ $(function() {
 								out.println("<div class='cell'></div>&nbsp;");
 							}
 							else {
-								out.println("<div class='cell'>" + student[Integer.parseInt(random[studentCnt]) - 1] + "</div>&nbsp;");
+								out.println("<div class='cell'><span><br>" + student[Integer.parseInt(random[studentCnt]) - 1] + 
+										"</span></div>&nbsp;");
 							}
 						}
 						out.println("<br><br>");
